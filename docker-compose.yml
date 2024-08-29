@@ -69,5 +69,13 @@ services:
   #     POSTGRES_HOST: postgres-service
   #     POSTGRES_PORT: 5432
 
+  worker:
+    build: .
+    command: python app/manage.py rqworker default
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+
 volumes:
   postgres_data:
