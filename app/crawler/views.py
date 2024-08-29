@@ -1,9 +1,9 @@
 from django.http import HttpResponse
-import django_rq
-from task import example_task
+from tasks import enqueue_spider
 
-def my_view(request):
-    # Enqueue the example task
-    queue = django_rq.get_queue('default')
-    queue.enqueue(example_task, 10)  # Runs for 10 seconds
-    return HttpResponse("Task has been enqueued!")
+def start_crawler(request):
+    """
+    This view triggers the background task to run the Scrapy spider.
+    """
+    enqueue_spider()
+    return HttpResponse("Web crawler task has been enqueued!")
